@@ -4,13 +4,13 @@ import com.inventory.backend.model.Item;
 
 public interface ICommand {
 
-    boolean create(Item item);
+    void create(Item item);
 
-    boolean updateBuy(String itemName, int quantity);
+    void updateBuy(String itemName, int quantity);
 
-    boolean updateSell(String itemName, int quantity);
+    void updateSell(String itemName, int quantity);
 
-    boolean delete(String itemName);
+    void delete(String itemName);
 
     void report();
 

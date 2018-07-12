@@ -7,49 +7,46 @@ public class ItemRepository implements ICommand {
 
     private ItemSingleton itemSingleton = ItemSingleton.getInstance();
 
-    public boolean create(Item item) {
-        boolean res;
+    public void create(Item item) {
         if (!itemSingleton.itemMap.containsValue(item)) {
             itemSingleton.itemMap.put(item.getName(), item);
-            res = true;
         } else {
-            throw new ItemException(String.format("Item with name %s already registered in the inventory.\"", item.getName()));
+            throw new ItemException(String.format("Item with name %s already registered in the inventory.", item.getName()));
         }
-        return res;
     }
 
-    public boolean updateBuy(String itemName, int quantity) {
-        boolean res;
+    public void updateBuy(String itemName, int quantity) {
         if (itemSingleton.itemMap.containsKey(itemName)) {
             Item tmpItem = itemSingleton.itemMap.get(itemName);
             tmpItem.setQuantity(quantity + tmpItem.getQuantity());
-            res = true;
+            itemSingleton.itemMap.replace(itemName, tmpItem);
         } else {
-            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.\"", itemName));
+            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
         }
-        return res;
     }
 
-    public boolean updateSell(String itemName, int quantity) {
-        boolean res;
+    public void updateSell(String itemName, int quantity) {
         if (itemSingleton.itemMap.containsKey(itemName)) {
+            Item tmpItem = itemSingleton.itemMap.get(itemName);
 
-            res = true;
+            if (tmpItem.getQuantity() > quantity) {
+                tmpItem.setQuantity(quantity - tmpItem.getQuantity());
+                itemSingleton.itemMap.replace(itemName, tmpItem);
+            } else {
+                throw new ItemException(String.format("Item with name %s doesn't have enough %d quantity for sell", itemName, quantity));
+            }
+
         } else {
-            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.\"", itemName));
+            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
         }
-        return res;
     }
 
-    public boolean delete(String itemName) {
-        boolean res;
+    public void delete(String itemName) {
         if (itemSingleton.itemMap.containsKey(itemName)) {
             itemSingleton.itemMap.remove(itemName);
-            res = true;
         } else {
-            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.\"", itemName));
+            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
         }
-        return res;
     }
 
     public void report() {
