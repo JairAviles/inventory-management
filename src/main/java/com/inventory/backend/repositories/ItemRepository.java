@@ -14,77 +14,56 @@ public class ItemRepository implements ICommand {
     private final String AVAILABLE_QTY_COLUMN_TITLE = "Sold At";
 
     public void create(Item item) {
-        try {
-            if (!itemSingleton.currentItemMap.containsKey(item.getName())) {
-                itemSingleton.currentItemMap.put(item.getName(), item);
-                InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s created with success.", item.getName()));
-            } else {
-                throw new ItemException(String.format("Item with name %s already registered in the inventory.", item.getName()));
-            }
-        } catch (ItemException e) {
-            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "error", e.getMessage());
-            e.printStackTrace();
+        if (!itemSingleton.currentItemMap.containsKey(item.getName())) {
+            itemSingleton.currentItemMap.put(item.getName(), item);
+            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s created with success.", item.getName()));
+        } else {
+            throw new ItemException(String.format("Item with name %s already registered in the inventory.", item.getName()));
         }
     }
 
     public void updateBuy(String itemName, int quantity) {
-        try {
-            if (itemSingleton.currentItemMap.containsKey(itemName)) {
-                Item tmpItem = itemSingleton.currentItemMap.get(itemName);
-                tmpItem.setQuantity(quantity + tmpItem.getQuantity());
-                itemSingleton.currentItemMap.replace(itemName, tmpItem);
-                InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s updated quantity by buy with success.", itemName));
-            } else {
-                throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
-            }
-        } catch (ItemException e) {
-            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "error", e.getMessage());
+        if (itemSingleton.currentItemMap.containsKey(itemName)) {
+            Item tmpItem = itemSingleton.currentItemMap.get(itemName);
+            tmpItem.setQuantity(quantity + tmpItem.getQuantity());
+            itemSingleton.currentItemMap.replace(itemName, tmpItem);
+            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s updated quantity by buy with success.", itemName));
+        } else {
+            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
         }
     }
 
     public void updateSell(String itemName, int quantity) {
-        try {
-            if (itemSingleton.currentItemMap.containsKey(itemName)) {
-                Item tmpItem = itemSingleton.currentItemMap.get(itemName);
+        if (itemSingleton.currentItemMap.containsKey(itemName)) {
+            Item tmpItem = itemSingleton.currentItemMap.get(itemName);
 
-                if (tmpItem.getQuantity() > quantity) {
-                    tmpItem.setQuantity(quantity - tmpItem.getQuantity());
-                    itemSingleton.currentItemMap.replace(itemName, tmpItem);
-                    InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s updated quantity by sell with success.", itemName));
-                } else {
-                    throw new ItemException(String.format("Item with name %s doesn't have enough %d quantity for sell", itemName, quantity));
-                }
-
+            if (tmpItem.getQuantity() >= quantity) {
+                tmpItem.setQuantity(quantity - tmpItem.getQuantity());
+                itemSingleton.currentItemMap.replace(itemName, tmpItem);
+                InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s updated quantity by sell with success.", itemName));
             } else {
-                throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
+                throw new ItemException(String.format("Item with name %s doesn't have enough %d quantity for sell", itemName, quantity));
             }
-        } catch (ItemException e) {
-            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "error", e.getMessage());
+
+        } else {
+            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
         }
     }
 
     public void delete(String itemName) {
-        try {
-            if (itemSingleton.currentItemMap.containsKey(itemName)) {
-                itemSingleton.currentItemMap.remove(itemName);
-                InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s deleted with success.", itemName));
-            } else {
-                throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
-            }
-        } catch (ItemException e) {
-            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "error", e.getMessage());
+        if (itemSingleton.currentItemMap.containsKey(itemName)) {
+            itemSingleton.currentItemMap.remove(itemName);
+            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s deleted with success.", itemName));
+        } else {
+            throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
         }
     }
 
     public void report() {
-        try {
-            if (itemSingleton.currentItemMap.isEmpty()) {
-                throw new ItemException("No data registered in the inventory!");
-            } else {
-                itemSingleton.lastItemMap = itemSingleton.currentItemMap;
-            }
-        } catch (ItemException e) {
-            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "error", e.getMessage());
+        if (itemSingleton.currentItemMap.isEmpty()) {
+            throw new ItemException("No data registered in the inventory!");
+        } else {
+            itemSingleton.lastItemMap = itemSingleton.currentItemMap;
         }
     }
 }

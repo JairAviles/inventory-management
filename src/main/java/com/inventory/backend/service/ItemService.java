@@ -4,7 +4,6 @@ import com.inventory.backend.model.Item;
 import com.inventory.backend.repositories.ICommand;
 import com.inventory.backend.repositories.ItemRepository;
 import com.inventory.exceptions.ItemException;
-import com.inventory.util.InventoryUtil;
 
 public class ItemService {
     private static ICommand commandItem = new ItemRepository();
@@ -29,19 +28,19 @@ public class ItemService {
 
     public static void updateBuy(String command) {
         String params[] = command.split(" ");
-        if (params.length == 2) {
-            commandItem.updateBuy(params[0], Integer.parseInt(params[1]));
+        if (params.length == 3) {
+            commandItem.updateBuy(params[1], Integer.parseInt(params[2]));
         }  else {
-            throw new ItemException("Invalid params for create command!");
+            throw new ItemException("Invalid params for updateBuy command!");
         }
     }
 
     public static void updateSell(String command) {
         String params[] = command.split(" ");
-        if (params.length == 2) {
-            commandItem.updateSell(params[0], Integer.parseInt(params[1]));
+        if (params.length == 3) {
+            commandItem.updateSell(params[1], Integer.parseInt(params[2]));
         }  else {
-            throw new ItemException("Invalid params for create command!");
+            throw new ItemException("Invalid params for updateSell command!");
         }
     }
 
