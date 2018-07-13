@@ -9,8 +9,12 @@ import java.util.Map;
 public class ItemSingleton {
 
     private static ItemSingleton instance = null;
-    public Map<String, Item> currentItemMap = new HashMap<String, Item>(); // HashMap used for data persistance
-    public Map<String, Item> lastItemMap = new HashMap<String, Item>(); // HashMap used for saving last data report
+    public Map<String, Item> currentItemMap = new HashMap<>(); // HashMap used for data persistance
+    public Map<String, Item> lastItemMap = new HashMap<>(); // HashMap used for saving last data report
+    public Double currentTotal = 0.0;
+    public Double lastTotal = 0.0;
+    public Double currentProfit = 0.0;
+    public Double lastProfit = 0.0;
 
     private ItemSingleton() { }
 

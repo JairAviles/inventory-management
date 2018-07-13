@@ -52,6 +52,7 @@ public class RequireBeforeItemTest {
     @Test
     public void shouldShowReportSuccessfully() {
         ItemService.report();
+        ItemService.report();
     }
 
     private void createMockData() {
