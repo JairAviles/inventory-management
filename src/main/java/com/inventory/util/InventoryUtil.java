@@ -1,6 +1,10 @@
 package com.inventory.util;
 
+import com.inventory.backend.service.ItemService;
 import com.inventory.enums.CommandsEnum;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
@@ -8,8 +12,8 @@ public class InventoryUtil {
 
     public static void showMenu() {
         int exit = 1;
-        System.out.println("Welcome to Mr. X inventory management! \n");
-        System.out.println("Write one of the following commands with the required parameters");
+        System.out.println("Welcome to Mr. X inventory management!");
+        System.out.println("Write one of the following commands with the required parameters\n");
         do {
 
             Scanner sc = new Scanner(System.in);
@@ -32,12 +36,32 @@ public class InventoryUtil {
                     && !command.contains(CommandsEnum.UPDATE_BUY.getCommandName())
                     && !command.contains(CommandsEnum.UPDATE_SELL.getCommandName())
                     && !command.contains(CommandsEnum.REPORT.getCommandName())) {
-                System.out.println("Invalid Command. Try again!");
+                logMessage(InventoryUtil.class.getSimpleName(),"error", "Invalid Command. Try again!");
+            } else {
+                if (command.contains(CommandsEnum.CREATE.getCommandName())) {
+                    ItemService.create(command);
+                } else if (command.contains(CommandsEnum.DELETE.getCommandName())) {
+                    ItemService.delete(command);
+                } else if (command.contains(CommandsEnum.UPDATE_BUY.getCommandName())) {
+                    ItemService.delete(command);
+                } else if (command.contains(CommandsEnum.UPDATE_SELL.getCommandName())) {
+                    ItemService.delete(command);
+                } else if (command.contains(CommandsEnum.REPORT.getCommandName())) {
+                    ItemService.report();
+                }
             }
-
-
-
         } while (exit != 0);
+    }
+
+    public static void logMessage(String className, String type, String msg) {
+        Logger logger = LoggerFactory.getLogger(className);
+
+        switch (type) {
+            case "info" :
+                logger.info(msg);
+            case "error" :
+                logger.error(msg);
+        }
     }
 
 }

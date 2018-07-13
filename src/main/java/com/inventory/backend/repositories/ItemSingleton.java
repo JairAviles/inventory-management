@@ -9,11 +9,10 @@ import java.util.Map;
 public class ItemSingleton {
 
     private static ItemSingleton instance = null;
-    public Map<String, Item> itemMap = new HashMap<String, Item>(); // HashMap used for data persistance
+    public Map<String, Item> currentItemMap = new HashMap<String, Item>(); // HashMap used for data persistance
+    public Map<String, Item> lastItemMap = new HashMap<String, Item>(); // HashMap used for saving last data report
 
-    private ItemSingleton() {
-
-    }
+    private ItemSingleton() { }
 
     /** Ensuring to have a thread-safe singleton instance **/
     public static synchronized ItemSingleton getInstance() {
