@@ -128,3 +128,6 @@ Tab01          	57.00     	84.98        	91          	5187.00
 Total value                                                 11253.87
 Profit since previous report                                -724.75
 ```
+
+### Tests
+You can run unit test with the following command `mvn test`

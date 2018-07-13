@@ -15,13 +15,15 @@ public class ItemRepository implements ICommand {
 
     public void create(Item item) {
         try {
-            if (!itemSingleton.currentItemMap.containsValue(item)) {
+            if (!itemSingleton.currentItemMap.containsKey(item.getName())) {
                 itemSingleton.currentItemMap.put(item.getName(), item);
+                InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s created with success.", item.getName()));
             } else {
                 throw new ItemException(String.format("Item with name %s already registered in the inventory.", item.getName()));
             }
         } catch (ItemException e) {
             InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "error", e.getMessage());
+            e.printStackTrace();
         }
     }
 

@@ -1,11 +1,14 @@
 package com.inventory.util;
 
+import com.inventory.backend.model.Item;
 import com.inventory.backend.service.ItemService;
 import com.inventory.enums.CommandsEnum;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class InventoryUtil {
@@ -26,7 +29,7 @@ public class InventoryUtil {
             System.out.println("0. Exit -> exit\n");
             System.out.println("Your command: ");
 
-            String command = sc.next();
+            String command = sc.nextLine();
 
             if (command.equalsIgnoreCase("exit")) {
                 exit = 0;
@@ -55,13 +58,36 @@ public class InventoryUtil {
 
     public static void logMessage(String className, String type, String msg) {
         Logger logger = LoggerFactory.getLogger(className);
-
-        switch (type) {
-            case "info" :
-                logger.info(msg);
-            case "error" :
-                logger.error(msg);
+        if (type.equalsIgnoreCase("info" )) {
+            logger.info(msg);
+        } else
+        if (type.equalsIgnoreCase("error" )) {
+            logger.error(msg);
         }
+    }
+
+    public static Map<String, Item> createMockItems() {
+        Map<String, Item> mockItemsMap = new HashMap<>();
+        Item item = new Item();
+        item.setName("Item1");
+        item.setCostPrice((long) 5.0);
+        item.setSellPrice((long) 8.0);
+        item.setQuantity(0);
+        mockItemsMap.put(item.getName(), item);
+
+        item.setName("Item2");
+        item.setCostPrice((long) 12.0);
+        item.setSellPrice((long) 17.0);
+        item.setQuantity(0);
+
+        item.setName("Item3");
+        item.setCostPrice((long) 10.0);
+        item.setSellPrice((long) 12.50);
+        item.setQuantity(0);
+
+        mockItemsMap.put(item.getName(), item);
+
+        return mockItemsMap;
     }
 
 }
