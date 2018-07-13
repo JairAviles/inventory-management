@@ -11,10 +11,10 @@ public class Item implements Serializable {
     private String name;
 
     /** item cost price **/
-    private long costPrice;
+    private double costPrice;
 
     /** item sell price **/
-    private long sellPrice;
+    private double sellPrice;
 
     /** item quantity on stock **/
     private int quantity;
@@ -27,19 +27,19 @@ public class Item implements Serializable {
         this.name = name;
     }
 
-    public long getCostPrice() {
+    public double getCostPrice() {
         return costPrice;
     }
 
-    public void setCostPrice(long costPrice) {
+    public void setCostPrice(double costPrice) {
         this.costPrice = costPrice;
     }
 
-    public long getSellPrice() {
+    public double getSellPrice() {
         return sellPrice;
     }
 
-    public void setSellPrice(long sellPrice) {
+    public void setSellPrice(double sellPrice) {
         this.sellPrice = sellPrice;
     }
 

@@ -134,6 +134,10 @@ Profit since previous report                                -724.75
 You can run the main method located in the java.com.inventory.InventoryApplication class or run the
 following maven command `mvn exec:java`
 
+Because there is no dependecy integrated for persistance, a Singleton object is used for simulate it. However,
+when you exit a running program, all data registered will be lost. Take into account that each Exception thrown 
+may exit the program.
+
 ### Tests
 You can run unit test with the following command `mvn test`. 
 You will get a code coverage under HTML report under `./target/site/jacoco/*.html`

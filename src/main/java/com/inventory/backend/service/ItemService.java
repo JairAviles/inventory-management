@@ -12,13 +12,13 @@ public class ItemService {
         String params[] = command.split(" ");
 
         if (params.length == 4) {
-            Double costPrice = Double.parseDouble(params[2].trim());
-            Double sellPrice = Double.parseDouble(params[3].trim());
+            Double costPrice = Double.valueOf(params[2].trim());
+            Double sellPrice = Double.valueOf(params[3].trim());
 
             Item item = new Item();
             item.setName(params[1].trim());
-            item.setCostPrice(costPrice.longValue());
-            item.setSellPrice(sellPrice.longValue());
+            item.setCostPrice(costPrice);
+            item.setSellPrice(sellPrice);
             item.setQuantity(0);
             commandItem.create(item);
         } else {

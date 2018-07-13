@@ -1,6 +1,5 @@
 package com.inventory.util;
 
-import com.inventory.backend.model.Item;
 import com.inventory.backend.service.ItemService;
 import com.inventory.enums.CommandsEnum;
 
