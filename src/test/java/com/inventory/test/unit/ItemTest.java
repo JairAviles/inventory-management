@@ -2,7 +2,7 @@ package com.inventory.test.unit;
 
 import com.inventory.backend.repositories.ItemSingleton;
 import com.inventory.backend.service.ItemService;
-import com.inventory.util.InventoryUtil;
+import com.inventory.exceptions.ItemException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,8 +25,18 @@ public class ItemTest {
         Assert.assertFalse(itemSingleton.currentItemMap.isEmpty());
     }
 
+    @Test(expected = ItemException.class)
+    public void shouldThrownItemExceptionWhenCreateNewItemHasWrongParams() {
+        ItemService.create("create WrongParamsPassed");
+    }
+
+    @Test(expected = NumberFormatException.class)
+    public void shouldThrownNumberFormatExceptionWhenCreateNewItemHasWrongParams() {
+        ItemService.create("create Wrong Params Passed");
+    }
+
     @Test
-    public void shouldDeleteExistingItemsSuccesfully() {
+    public void shouldDeleteExistingItemsSuccessfully() {
         Assert.assertFalse(itemSingleton.currentItemMap.isEmpty());
 
         ItemService.delete("delete Test01");

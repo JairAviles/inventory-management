@@ -10,40 +10,39 @@ public class ItemService {
     private static ICommand commandItem = new ItemRepository();
 
     public static void create(String command) {
-        System.out.println(command);
-        try {
-            String params[] = command.split(" ");
+        String params[] = command.split(" ");
+
+        if (params.length == 4) {
             Double costPrice = Double.parseDouble(params[2].trim());
             Double sellPrice = Double.parseDouble(params[3].trim());
 
-            boolean isParamsValid = params.length == 4
-                                        && costPrice instanceof Double
-                                        && sellPrice instanceof Double ? true : false;
-            if (isParamsValid) {
-                Item item = new Item();
-                item.setName(params[1].trim());
-                item.setCostPrice(costPrice.longValue());
-                item.setSellPrice(sellPrice.longValue());
-                item.setQuantity(0);
-                commandItem.create(item);
-            } else {
-                throw new ItemException("Invalid params for create command!");
-            }
-        } catch (ItemException e) {
-            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "error", e.getMessage());
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "error", e.getMessage());
-            e.printStackTrace();
+            Item item = new Item();
+            item.setName(params[1].trim());
+            item.setCostPrice(costPrice.longValue());
+            item.setSellPrice(sellPrice.longValue());
+            item.setQuantity(0);
+            commandItem.create(item);
+        } else {
+            throw new ItemException("Invalid params for create command!");
         }
     }
 
     public static void updateBuy(String command) {
-//        commandItem.updateBuy("", 0);
+        String params[] = command.split(" ");
+        if (params.length == 2) {
+            commandItem.updateBuy(params[0], Integer.parseInt(params[1]));
+        }  else {
+            throw new ItemException("Invalid params for create command!");
+        }
     }
 
     public static void updateSell(String command) {
-//        commandItem.updateSell("", 0);
+        String params[] = command.split(" ");
+        if (params.length == 2) {
+            commandItem.updateSell(params[0], Integer.parseInt(params[1]));
+        }  else {
+            throw new ItemException("Invalid params for create command!");
+        }
     }
 
     public static void delete(String command) {
