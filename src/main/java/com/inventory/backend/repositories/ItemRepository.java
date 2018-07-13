@@ -33,6 +33,7 @@ public class ItemRepository implements ICommand {
                 Item tmpItem = itemSingleton.currentItemMap.get(itemName);
                 tmpItem.setQuantity(quantity + tmpItem.getQuantity());
                 itemSingleton.currentItemMap.replace(itemName, tmpItem);
+                InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s updated quantity by buy with success.", itemName));
             } else {
                 throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
             }
@@ -49,6 +50,7 @@ public class ItemRepository implements ICommand {
                 if (tmpItem.getQuantity() > quantity) {
                     tmpItem.setQuantity(quantity - tmpItem.getQuantity());
                     itemSingleton.currentItemMap.replace(itemName, tmpItem);
+                    InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s updated quantity by sell with success.", itemName));
                 } else {
                     throw new ItemException(String.format("Item with name %s doesn't have enough %d quantity for sell", itemName, quantity));
                 }
@@ -65,6 +67,7 @@ public class ItemRepository implements ICommand {
         try {
             if (itemSingleton.currentItemMap.containsKey(itemName)) {
                 itemSingleton.currentItemMap.remove(itemName);
+                InventoryUtil.logMessage(ItemRepository.class.getSimpleName(), "info", String.format("Item with name %s deleted with success.", itemName));
             } else {
                 throw new ItemException(String.format("Item with name %s doesn't exists in the inventory.", itemName));
             }

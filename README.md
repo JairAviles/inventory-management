@@ -129,5 +129,11 @@ Total value                                                 11253.87
 Profit since previous report                                -724.75
 ```
 
+### Run program
+
+You can run the main method located in the java.com.inventory.InventoryApplication class or run the
+following maven command `mvn exec:java`
+
 ### Tests
-You can run unit test with the following command `mvn test`
+You can run unit test with the following command `mvn test`. 
+You will get a code coverage under HTML report under `./target/site/jacoco/*.html`

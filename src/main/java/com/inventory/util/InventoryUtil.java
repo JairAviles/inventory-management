@@ -46,9 +46,9 @@ public class InventoryUtil {
                 } else if (command.contains(CommandsEnum.DELETE.getCommandName())) {
                     ItemService.delete(command);
                 } else if (command.contains(CommandsEnum.UPDATE_BUY.getCommandName())) {
-                    ItemService.delete(command);
+                    ItemService.updateBuy(command);
                 } else if (command.contains(CommandsEnum.UPDATE_SELL.getCommandName())) {
-                    ItemService.delete(command);
+                    ItemService.updateSell(command);
                 } else if (command.contains(CommandsEnum.REPORT.getCommandName())) {
                     ItemService.report();
                 }
@@ -64,30 +64,6 @@ public class InventoryUtil {
         if (type.equalsIgnoreCase("error" )) {
             logger.error(msg);
         }
-    }
-
-    public static Map<String, Item> createMockItems() {
-        Map<String, Item> mockItemsMap = new HashMap<>();
-        Item item = new Item();
-        item.setName("Item1");
-        item.setCostPrice((long) 5.0);
-        item.setSellPrice((long) 8.0);
-        item.setQuantity(0);
-        mockItemsMap.put(item.getName(), item);
-
-        item.setName("Item2");
-        item.setCostPrice((long) 12.0);
-        item.setSellPrice((long) 17.0);
-        item.setQuantity(0);
-
-        item.setName("Item3");
-        item.setCostPrice((long) 10.0);
-        item.setSellPrice((long) 12.50);
-        item.setQuantity(0);
-
-        mockItemsMap.put(item.getName(), item);
-
-        return mockItemsMap;
     }
 
 }

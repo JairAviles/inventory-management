@@ -47,7 +47,8 @@ public class ItemService {
     }
 
     public static void delete(String command) {
-//        commandItem.delete("");
+        String params[] = command.split(" ");
+        commandItem.delete(params[1]);
     }
 
     public static void report() {
