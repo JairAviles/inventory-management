@@ -79,7 +79,7 @@ public class ItemRepository implements ICommand {
                         .sorted(Map.Entry.comparingByKey())
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                                 (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-                printItemMap(sortedLastMap, itemSingleton.lastProfit);
+                printItemMap(sortedLastMap, "last");
             }
 
             // Sort Map by key
@@ -88,20 +88,19 @@ public class ItemRepository implements ICommand {
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                             (oldValue, newValue) -> oldValue, LinkedHashMap::new));
 
-            printItemMap(sortedCurrentMap, itemSingleton.currentProfit);
+            printItemMap(sortedCurrentMap, "current");
 
 
             itemSingleton.lastItemMap.clear();
             itemSingleton.lastItemMap.putAll(itemSingleton.currentItemMap);
             itemSingleton.lastProfit = itemSingleton.currentProfit;
-            itemSingleton.lastTotal = itemSingleton.currentTotal;
             itemSingleton.currentProfit = 0.0;
             itemSingleton.currentTotal = 0.0;
 
         }
     }
 
-    private void printItemMap(Map map, Double profit) {
+    private void printItemMap(Map map, String mapType) {
 
         DecimalFormat df2 = new DecimalFormat(".00");
 
@@ -125,12 +124,23 @@ public class ItemRepository implements ICommand {
             System.out.print(df2.format(item.getSellPrice()) + "\t\t\t");
             System.out.print(item.getQuantity() + "\t\t\t");
             System.out.println(df2.format(item.getCostPrice() * item.getQuantity()));
-            itemSingleton.currentTotal += item.getCostPrice() * item.getQuantity();
+            if (mapType.equalsIgnoreCase("current")) {
+                itemSingleton.currentTotal += item.getCostPrice() * item.getQuantity();
+            } else if (mapType.equalsIgnoreCase("last")) {
+                itemSingleton.lastTotal += item.getCostPrice() * item.getQuantity();
+            }
         });
 
         System.out.println(COLUMN_TITLE_SEPARATOR + COLUMN_TITLE_SEPARATOR + COLUMN_TITLE_SEPARATOR + COLUMN_TITLE_SEPARATOR + COLUMN_TITLE_SEPARATOR);
-        System.out.println(TOTAL_VALUE_FIELD_TITLE + " " + df2.format(itemSingleton.currentTotal));
-        System.out.println(PROFIT_SINCE_LAST_REPORT_FIELD_TITLE  + " " + df2.format(profit));
+
+        if (mapType.equalsIgnoreCase("current")) {
+            System.out.println(TOTAL_VALUE_FIELD_TITLE + " " + df2.format(itemSingleton.currentTotal));
+            System.out.println(PROFIT_SINCE_LAST_REPORT_FIELD_TITLE  + " " + df2.format(itemSingleton.currentProfit));
+        } else if (mapType.equalsIgnoreCase("last")) {
+            System.out.println(TOTAL_VALUE_FIELD_TITLE + " " + df2.format(itemSingleton.lastTotal));
+            System.out.println(PROFIT_SINCE_LAST_REPORT_FIELD_TITLE  + " " + df2.format(itemSingleton.lastProfit));
+        }
+
         System.out.println("\n");
     }
 }
