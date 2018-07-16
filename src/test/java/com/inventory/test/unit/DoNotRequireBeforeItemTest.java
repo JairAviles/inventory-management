@@ -1,19 +1,12 @@
 package com.inventory.test.unit;
 
-import com.inventory.backend.repositories.ItemSingleton;
 import com.inventory.backend.service.ItemService;
 import com.inventory.exceptions.ItemException;
-import org.junit.Before;
+
 import org.junit.Test;
 
-public class DontRequireBeforeItemTest {
+public class DoNotRequireBeforeItemTest {
 
-    private ItemSingleton itemSingleton;
-
-    @Before
-    public void init() {
-        itemSingleton = ItemSingleton.getInstance();
-    }
 
     @Test(expected = ItemException.class)
     public void shouldThrownItemExceptionWhenCreateNewItemHasWrongParams() {

@@ -51,7 +51,13 @@ public class RequireBeforeItemTest {
 
     @Test
     public void shouldShowReportSuccessfully() {
+        ItemService.updateBuy("updateBuy Test01 10");
+        ItemService.updateBuy("updateBuy Test02 50");
+        ItemService.updateBuy("updateBuy Test03 80");
         ItemService.report();
+        ItemService.updateSell("updateSell Test01 5");
+        ItemService.updateSell("updateSell Test02 25");
+        ItemService.updateSell("updateSell Test03 40");
         ItemService.report();
     }
 
